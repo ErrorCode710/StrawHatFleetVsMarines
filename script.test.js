@@ -31,7 +31,12 @@ describe("Ship class", () => {
 
 describe("Gameboard Class", () => {
   let gameBoard;
-  // Gameboard size should be 10x10
+
+  let ship;
+
+  beforeEach(() => {
+    ship = new Ship("Carrier", 5);
+  });
   beforeEach(() => {
     gameBoard = new GameBoard();
   });
@@ -117,5 +122,28 @@ describe("Gameboard Class", () => {
 
     const isShipExist = gameBoard.isShipAlreadyExist("Y", 5, [2, 5]);
     expect(isShipExist).toBe(true);
+  });
+
+  test("return 1 when ship hit once", () => {
+    const startCoord = [2, 2];
+    const axis = "X";
+    const name = "Carrier";
+
+    gameBoard.placeShip(name, axis, startCoord);
+    gameBoard.receiveAttack(startCoord);
+    expect(gameBoard.board[2][6].hits).toBe(1);
+  });
+  test("return true when ship is sunked hit five times", () => {
+    const startCoord = [2, 2];
+    const axis = "X";
+    const name = "Carrier";
+
+    gameBoard.placeShip(name, axis, startCoord);
+    gameBoard.receiveAttack([2, 2]);
+    gameBoard.receiveAttack([2, 3]);
+    gameBoard.receiveAttack([2, 4]);
+    gameBoard.receiveAttack([2, 5]);
+    gameBoard.receiveAttack([2, 6]);
+    expect(gameBoard.board[2][6].isSunk()).toBe(true);
   });
 });

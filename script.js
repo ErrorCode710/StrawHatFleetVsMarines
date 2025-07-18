@@ -46,10 +46,10 @@ class GameBoard {
     const size = shipsConfig.find((shipConfig) => shipConfig.name === shipName).size;
     const ship = new Ship(shipName, size);
 
-    /*First approach to check if the coordinates is empty is 
-        is to create an array of coordinates and then loop through them if result is false then loop again to put the ship on the coordinates
-    */
-
+    if (this.isShipAlreadyExist(axis, size, [startY, startY])) {
+      console.warn("Ship Already Exist");
+      return false;
+    }
     if (axis === "Y") {
       for (let i = 0; i < size; i++) {
         this.board[startY + i][startX] = ship;
@@ -60,6 +60,7 @@ class GameBoard {
       }
     }
   }
+
   isShipAlreadyExist(axis, size, [startY, startX]) {
     for (let i = 0; i < size; i++) {
       const x = axis === "X" ? startX + i : startX;
@@ -69,7 +70,14 @@ class GameBoard {
     }
     return false;
   }
-
+  receiveAttack([y, x]) {
+    // if coordinates is not 0 or empty ship.hit()
+    if (this.board[y][x] !== 0) {
+      this.board[y][x].hit();
+    } else {
+      return false;
+    }
+  }
   print(arr) {
     arr.forEach((row) => {
       console.log(row.join(" "));
@@ -77,12 +85,10 @@ class GameBoard {
   }
 }
 
-const ship = new Ship("carrier", 5);
-const board = new GameBoard();
-board.placeShip("Carrier", "X", [2, 2]);
-board.board[2][2];
-board.print(board.board);
-console.log(board.board[6][2].type);
-console.log(board.board);
+// const ship = new Ship("carrier", 5);
+// const board = new GameBoard();
+// board.placeShip("Carrier", "X", [2, 2]);
+// board.board[2][2];
+// board.print(board.board);
 
 module.exports = { Ship, GameBoard, shipsConfig };
