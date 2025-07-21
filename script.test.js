@@ -1,4 +1,5 @@
-const { Ship, GameBoard, shipsConfig } = require("./script");
+const GameBoard = require("./gameboard.js");
+const { Ship, shipsConfig } = require("./ship.js");
 
 describe("Ship class", () => {
   let ship;
@@ -145,5 +146,55 @@ describe("Gameboard Class", () => {
     gameBoard.receiveAttack([2, 5]);
     gameBoard.receiveAttack([2, 6]);
     expect(gameBoard.board[2][6].isSunk()).toBe(true);
+  });
+  //records the coordinates of the missed shot.
+
+  test("returns the coordinates of the missed shot", () => {
+    const startCoord = [2, 2];
+    const axis = "X";
+    const name = "Carrier";
+
+    gameBoard.placeShip(name, axis, startCoord);
+    const missedCoord = [0, 0];
+    gameBoard.receiveAttack(missedCoord);
+
+    expect(gameBoard.missedShot.has("0,0")).toBe(true);
+  });
+
+  test("returns the total missed shot", () => {
+    const startCoord = [2, 2];
+    const axis = "X";
+    const name = "Carrier";
+
+    gameBoard.placeShip(name, axis, startCoord);
+
+    gameBoard.receiveAttack([0, 0]);
+    gameBoard.receiveAttack([1, 2]);
+    gameBoard.receiveAttack([1, 1]);
+
+    expect(gameBoard.totalMiss()).toBe(3);
+  });
+  test("returns 3 as the total ship on the gameboard", () => {
+    // to check is iterate the array and check for unique types of ship
+
+    gameBoard.placeShip("Carrier", "X", [2, 2]);
+    gameBoard.placeShip("Battleship", "X", [3, 2]);
+    gameBoard.placeShip("Cruiser", "X", [4, 2]);
+
+    expect(gameBoard.placedShip.length).toBe(3);
+  });
+
+  test("returns 2 as the total ship if one ship is sunk", () => {
+    // to check is iterate the array and check for unique types of ship
+
+    gameBoard.placeShip("Carrier", "X", [2, 2]);
+    gameBoard.placeShip("Battleship", "X", [3, 2]);
+    gameBoard.placeShip("Cruiser", "X", [4, 2]);
+
+    gameBoard.receiveAttack([4, 2]);
+    gameBoard.receiveAttack([4, 3]);
+    gameBoard.receiveAttack([4, 4]);
+
+    expect(gameBoard.totalRemainingShips()).toBe(2);
   });
 });
