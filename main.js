@@ -4,10 +4,10 @@ import { renderBoard } from "./dom.js";
 const player1 = new Player();
 const player2 = new Player();
 
-player1.gameBoard.placeShip("Carrier", "X", [2, 2]);
-
-player1.gameBoard.receiveAttack([2, 2]);
-player1.gameBoard.receiveAttack([2, 4]);
+// player1.gameBoard.placeShip("Carrier", "X", [2, 2]);
+player1.gameBoard.placeShipRandomly();
+// player1.gameBoard.receiveAttack([2, 2]);
+// player1.gameBoard.receiveAttack([2, 4]);
 
 renderBoard(player1.gameBoard, "player1");
 renderBoard(player2.gameBoard, "player2");

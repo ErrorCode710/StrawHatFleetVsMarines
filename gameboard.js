@@ -23,7 +23,7 @@ export class GameBoard {
     const size = shipsConfig.find((shipConfig) => shipConfig.name === shipName).size;
     const ship = new Ship(shipName, size);
 
-    if (this.isShipAlreadyExist(axis, size, [startY, startY])) {
+    if (this.isShipAlreadyExist(axis, size, [startY, startX])) {
       console.warn("Ship Already Exist");
       return false;
     }
@@ -37,8 +37,24 @@ export class GameBoard {
       }
     }
     this.placedShip.push(ship);
+    return true;
   }
+  placeShipRandomly() {
+    for (const ship of shipsConfig) {
+      let placed = false;
 
+      while (!placed) {
+        const randomX = Math.floor(Math.random() * 10);
+        const randomY = Math.floor(Math.random() * 10);
+        const randomAxis = Math.random() >= 0.5 ? "X" : "Y";
+
+        placed = this.placeShip(ship.name, randomAxis, [randomY, randomX]);
+      }
+    }
+
+    // we need to place all of the ship on the shipconfig
+    // for every ships on the ship config
+  }
   isShipAlreadyExist(axis, size, [startY, startX]) {
     for (let i = 0; i < size; i++) {
       const x = axis === "X" ? startX + i : startX;

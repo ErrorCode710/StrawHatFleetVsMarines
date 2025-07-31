@@ -199,4 +199,19 @@ describe("Gameboard Class", () => {
 
     expect(gameBoard.totalRemainingShips()).toBe(2);
   });
+
+  test("returns 2 as the total ship if one ship is sunk", () => {
+    // to check is iterate the array and check for unique types of ship
+
+    gameBoard.placeShip("Carrier", "X", [2, 2]);
+    gameBoard.placeShip("Battleship", "X", [3, 2]);
+    gameBoard.placeShip("Cruiser", "X", [4, 2]);
+
+    gameBoard.receiveAttack([4, 2]);
+    gameBoard.receiveAttack([4, 3]);
+    gameBoard.receiveAttack([4, 4]);
+
+    expect(gameBoard.totalRemainingShips()).toBe(2);
+  });
+
 });
