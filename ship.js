@@ -11,14 +11,21 @@ export class Ship {
     this.type = type;
     this.size = size;
     // this.life = size; // redudant
-    this.hits = 0;
-    this.state;
+    // this.hits = 0;
+    this.hits = Array(size).fill(false);
   }
-  hit() {
-    return this.hits++;
+  hit(index) {
+    // return this.hits++;
+    this.hits[index] = true;
   }
   isSunk() {
-    return this.hits >= this.size;
+    // if all of the value on hits is true then sink is true
+    const hit = this.hitCount();
+
+    return hit >= this.size;
+  }
+  hitCount() {
+    return this.hits.filter((value) => value === true).length;
   }
   info() {
     return `Class of Ship ${this.type} size of the ship ${this.size} hitpoint of the ship ${this.life} hits of the ship ${

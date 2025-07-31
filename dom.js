@@ -1,5 +1,6 @@
 // for update
 import { Ship } from "./ship.js";
+
 export function renderBoard(gameBoard, playerBoard) {
   const boardContainer = document.getElementById(playerBoard);
   console.log(boardContainer);
@@ -12,9 +13,9 @@ export function renderBoard(gameBoard, playerBoard) {
 
       if (value === 0) {
         classValue = "empty";
-      } else if (value instanceof Ship) {
+      } else if (value.state === "idle") {
         classValue = "ship";
-      } else if (value === "hit") {
+      } else if (value.state === "hit") {
         classValue = "hit";
       } else if (value === "miss") {
         classValue = "miss";

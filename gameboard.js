@@ -29,11 +29,11 @@ export class GameBoard {
     }
     if (axis === "Y") {
       for (let i = 0; i < size; i++) {
-        this.board[startY + i][startX] = ship;
+        this.board[startY + i][startX] = { ship: ship, index: i, state: "idle" };
       }
     } else {
       for (let i = 0; i < size; i++) {
-        this.board[startY][startX + i] = ship;
+        this.board[startY][startX + i] = { ship: ship, index: i, state: "idle" };
       }
     }
     this.placedShip.push(ship);
@@ -50,10 +50,10 @@ export class GameBoard {
   }
 
   receiveAttack([y, x]) {
-    const ship = this.board[y][x];
-    if (ship !== 0) {
-      ship.hit();
-      this.removeShipIfSunk(ship);
+    const cell = this.board[y][x];
+    if (cell !== 0) {
+      cell.ship.hit(cell.index);
+      this.removeShipIfSunk(cell.ship);
       this.board[y][x].state = "hit";
     } else {
       this.missedShot.add(`${y},${x}`);

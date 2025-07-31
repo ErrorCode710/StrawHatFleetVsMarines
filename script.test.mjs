@@ -17,15 +17,15 @@ describe("Ship class", () => {
   });
 
   test("should incerease the ship hit", () => {
-    ship.hit();
-    expect(ship.hits).toBe(1);
+    ship.hit(0);
+    expect(ship.hitCount()).toBe(1);
   });
   test("should sunked the ship", () => {
-    ship.hit();
-    ship.hit();
-    ship.hit();
-    ship.hit();
-    ship.hit();
+    ship.hit(0);
+    ship.hit(1);
+    ship.hit(2);
+    ship.hit(3);
+    ship.hit(4);
     expect(ship.isSunk()).toBe(true);
   });
 });
@@ -76,7 +76,7 @@ describe("Gameboard Class", () => {
       const cell = gameBoard.board[y][x];
 
       expect(cell).toBeDefined();
-      expect(cell.type).toBe("Carrier");
+      expect(cell.ship.type).toBe("Carrier");
     });
   });
   test("Places the Carrier horizontally starting at (2,2)  ", () => {
@@ -99,7 +99,7 @@ describe("Gameboard Class", () => {
       const cell = gameBoard.board[y][x];
 
       expect(cell).toBeDefined();
-      expect(cell.type).toBe("Carrier");
+      expect(cell.ship.type).toBe("Carrier");
     });
   });
   test("Should return true if there is already a ship on that coordinates  ", () => {
@@ -132,7 +132,9 @@ describe("Gameboard Class", () => {
 
     gameBoard.placeShip(name, axis, startCoord);
     gameBoard.receiveAttack(startCoord);
-    expect(gameBoard.board[2][6].hits).toBe(1);
+    const cell = gameBoard.board[2][6].ship.hits;
+    const count = cell.filter((value) => value === true).length;
+    expect(count).toBe(1);
   });
   test("return true when ship is sunked hit five times", () => {
     const startCoord = [2, 2];
@@ -145,7 +147,7 @@ describe("Gameboard Class", () => {
     gameBoard.receiveAttack([2, 4]);
     gameBoard.receiveAttack([2, 5]);
     gameBoard.receiveAttack([2, 6]);
-    expect(gameBoard.board[2][6].isSunk()).toBe(true);
+    expect(gameBoard.board[2][6].ship.isSunk()).toBe(true);
   });
   //records the coordinates of the missed shot.
 
