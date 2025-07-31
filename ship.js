@@ -12,6 +12,7 @@ export class Ship {
     this.size = size;
     // this.life = size; // redudant
     this.hits = 0;
+    this.state;
   }
   hit() {
     return this.hits++;
@@ -26,4 +27,4 @@ export class Ship {
   }
 }
 
-module.exports = { Ship, shipsConfig };
+// module.exports = { Ship, shipsConfig };

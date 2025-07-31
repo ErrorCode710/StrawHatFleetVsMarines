@@ -1,4 +1,4 @@
-import { Ship, shipsConfig } from "./ship";
+import { Ship, shipsConfig } from "./ship.js";
 
 export class GameBoard {
   constructor() {
@@ -54,6 +54,7 @@ export class GameBoard {
     if (ship !== 0) {
       ship.hit();
       this.removeShipIfSunk(ship);
+      this.board[y][x].state = "hit";
     } else {
       this.missedShot.add(`${y},${x}`);
     }
@@ -89,4 +90,4 @@ export class GameBoard {
   }
 }
 
-module.exports = GameBoard;
+// module.exports = GameBoard;
