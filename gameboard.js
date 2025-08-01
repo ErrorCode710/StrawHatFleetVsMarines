@@ -73,6 +73,7 @@ export class GameBoard {
       this.board[y][x].state = "hit";
     } else {
       this.missedShot.add(`${y},${x}`);
+      console.log(this.missedShot);
     }
     this.totalRemainingShips();
   }

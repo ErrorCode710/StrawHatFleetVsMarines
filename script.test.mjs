@@ -1,5 +1,6 @@
 const { GameBoard } = require("./gameboard.js");
 const { Ship, shipsConfig } = require("./ship.js");
+const { GameManager } = require("./gameManager.js");
 
 describe("Ship class", () => {
   let ship;
@@ -186,18 +187,18 @@ describe("Gameboard Class", () => {
     expect(gameBoard.placedShip.length).toBe(3);
   });
 
-  test("returns 2 as the total ship if one ship is sunk", () => {
+  test("returns 0 as the total ship if all ship is sunk", () => {
     // to check is iterate the array and check for unique types of ship
 
-    gameBoard.placeShip("Carrier", "X", [2, 2]);
-    gameBoard.placeShip("Battleship", "X", [3, 2]);
+    // gameBoard.placeShip("Carrier", "X", [2, 2]);
+    // gameBoard.placeShip("Battleship", "X", [3, 2]);
     gameBoard.placeShip("Cruiser", "X", [4, 2]);
 
     gameBoard.receiveAttack([4, 2]);
     gameBoard.receiveAttack([4, 3]);
     gameBoard.receiveAttack([4, 4]);
 
-    expect(gameBoard.totalRemainingShips()).toBe(2);
+    expect(gameBoard.totalRemainingShips()).toBe(0);
   });
 
   test("returns 2 as the total ship if one ship is sunk", () => {
@@ -213,5 +214,26 @@ describe("Gameboard Class", () => {
 
     expect(gameBoard.totalRemainingShips()).toBe(2);
   });
+});
 
+describe("GameManager Class", () => {
+  let gameManager;
+
+  beforeEach(() => {
+    gameManager = new GameManager();
+  });
+
+  test("return player 2 for switching turns", () => {
+    gameManager.switchTurns();
+
+    expect(gameManager.currentPlayer).toBe(gameManager.player2);
+  });
+  test("return player 2 for opponent", () => {
+    expect(gameManager.opponent()).toBe(gameManager.player2);
+  });
+  test("return false for victory ", () => {
+    gameManager.startGame();
+
+    expect(gameManager.checkVictory()).toBe(false);
+  });
 });
