@@ -8,15 +8,14 @@ import { renderBoard } from "./dom.js";
 
 export class GameManager {
   constructor() {
-    this.player1 = new Player("player1");
-    this.player2 = new Player("player2");
+    this.player1 = new Player("player1", false);
+    this.player2 = new Player("player2", true);
     this.currentPlayer = this.player1;
   }
   startGame() {
     this.player1.gameBoard.placeShipRandomly();
     this.player2.gameBoard.placeShipRandomly();
     this.render();
-    // this.gameLoop();
   }
   gameLoop(y, x) {
     console.log(y, x);
@@ -29,9 +28,17 @@ export class GameManager {
     }
 
     this.switchTurns();
-    // get the  attack coordinates
-    // check the opponent board if all sunked does mean current player is win
-    // if not switch turn
+    // if player is ai wait for there turn
+    if (this.currentPlayer.isPlayerAi) {
+      console.log("Ai Turn");
+      const [aiY, aiX] = this.currentPlayer.AiPlayer();
+      console.log(aiY, aiX);
+      this.gameLoop(aiY, aiX);
+      // this.opponent().gameBoard.receiveAttack([aiY, aiX]);
+      this.render();
+    }
+
+   
   }
   switchTurns() {
     this.currentPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;

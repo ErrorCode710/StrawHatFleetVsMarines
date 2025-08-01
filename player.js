@@ -1,10 +1,27 @@
 import { GameBoard } from "./gameboard.js";
 
 export class Player {
-  constructor(playerName) {
+  constructor(playerName, isPlayerAi) {
     this.gameBoard = new GameBoard();
     this.playerName = playerName;
+    this.isPlayerAi = isPlayerAi;
+    this.attackCoord = new Set();
   }
   realPlayer() {}
-  computerPlayer() {}
+  AiPlayer() {
+    if (!this.isPlayerAi) return;
+
+    // return [y, x];
+    let coord;
+
+    do {
+      const x = Math.floor(Math.random() * 10);
+      const y = Math.floor(Math.random() * 10);
+      coord = `${y}, ${x}`;
+    } while (this.attackCoord.has(coord));
+
+    this.attackCoord.add(coord);
+    const [y, x] = coord.split(",").map(Number);
+    return [y, x];
+  }
 }

@@ -66,14 +66,25 @@ export class GameBoard {
   }
 
   receiveAttack([y, x]) {
-    const cell = this.board[y][x];
-    if (cell !== 0) {
+    const cell = this.board[y]?.[x];
+    console.log(cell);
+    // if (cell.state === "hit") {
+    //   console.log("already hit");
+    //   return;
+    // }
+    if (cell === "miss") {
+      console.log("ai hit the miss")
+      return;
+    }
+    if (cell !== 0 && "miss") {
+      console.log(cell.ship.hit(cell.index));
       cell.ship.hit(cell.index);
       this.removeShipIfSunk(cell.ship);
       this.board[y][x].state = "hit";
     } else {
+      this.board[y][x] = "miss";
       this.missedShot.add(`${y},${x}`);
-      console.log(this.missedShot);
+      // console.log(this.missedShot);
     }
     this.totalRemainingShips();
   }

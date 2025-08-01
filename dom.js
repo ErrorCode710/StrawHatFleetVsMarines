@@ -3,7 +3,7 @@ import { Ship } from "./ship.js";
 
 export function renderBoard(gameBoard, playerBoard) {
   const boardContainer = document.getElementById(playerBoard);
-  console.log(boardContainer);
+  // console.log(boardContainer);
   boardContainer.innerHTML = ""; // Clear previous board
 
   for (let y = 0; y < gameBoard.board.length; y++) {
