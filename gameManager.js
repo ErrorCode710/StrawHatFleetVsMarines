@@ -19,7 +19,8 @@ export class GameManager {
   }
   gameLoop(y, x) {
     console.log(y, x);
-    this.opponent().gameBoard.receiveAttack([y, x]);
+    const result = this.opponent().gameBoard.receiveAttack([y, x]);
+
     this.render();
 
     if (this.checkVictory()) {
@@ -33,12 +34,12 @@ export class GameManager {
       console.log("Ai Turn");
       const [aiY, aiX] = this.currentPlayer.AiPlayer();
       console.log(aiY, aiX);
-      this.gameLoop(aiY, aiX);
+      const resultAi = this.gameLoop(aiY, aiX);
+      this.currentPlayer.getResult(resultAi);
       // this.opponent().gameBoard.receiveAttack([aiY, aiX]);
-      this.render();
+      // this.render();
     }
-
-   
+    return result;
   }
   switchTurns() {
     this.currentPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;

@@ -1,6 +1,7 @@
 const { GameBoard } = require("./gameboard.js");
 const { Ship, shipsConfig } = require("./ship.js");
 const { GameManager } = require("./gameManager.js");
+const { Player } = require("./player.js");
 
 describe("Ship class", () => {
   let ship;
@@ -236,4 +237,22 @@ describe("GameManager Class", () => {
 
   //   expect(gameManager.checkVictory()).toBe(false);
   // });
+});
+
+describe("Player Class", () => {
+  let player;
+
+  // beforeEach(() => {
+  //   player = new Player("");
+  // });
+
+  test("return random coords", () => {
+    const playerAi = new Player("player1", true);
+    const result = new Set();
+
+    for (let i = 0; i < 20; i++) {
+      result.add(playerAi.getRandomMoves().toString());
+    }
+    expect(result.size).toBeGreaterThan(1);
+  });
 });

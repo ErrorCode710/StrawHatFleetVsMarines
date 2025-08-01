@@ -12,16 +12,23 @@ export class Player {
     if (!this.isPlayerAi) return;
 
     // return [y, x];
-    let coord;
+    const coord = this.getRandomMoves();
 
+    this.attackCoord.add(coord);
+    const [y, x] = coord.split(",").map(Number);
+    return [y, x];
+  }
+  getResult(result) {
+    console.log(result);
+  }
+  getRandomMoves() {
+    let coord;
     do {
       const x = Math.floor(Math.random() * 10);
       const y = Math.floor(Math.random() * 10);
       coord = `${y}, ${x}`;
     } while (this.attackCoord.has(coord));
 
-    this.attackCoord.add(coord);
-    const [y, x] = coord.split(",").map(Number);
-    return [y, x];
+    return coord;
   }
 }

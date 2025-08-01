@@ -73,7 +73,7 @@ export class GameBoard {
     //   return;
     // }
     if (cell === "miss") {
-      console.log("ai hit the miss")
+      console.log("ai hit the miss");
       return;
     }
     if (cell !== 0 && "miss") {
@@ -81,12 +81,15 @@ export class GameBoard {
       cell.ship.hit(cell.index);
       this.removeShipIfSunk(cell.ship);
       this.board[y][x].state = "hit";
+      const total = this.totalRemainingShips();
+      console.log(`Total Ship on the board ${total}`);
+      return { hit: true, coord: [y, x], sunk: this.removeShipIfSunk(cell.ship), shipSize: cell.ship.size };
     } else {
       this.board[y][x] = "miss";
       this.missedShot.add(`${y},${x}`);
       // console.log(this.missedShot);
+      return false;
     }
-    this.totalRemainingShips();
   }
 
   totalRemainingShips() {
@@ -96,7 +99,7 @@ export class GameBoard {
   removeShipIfSunk(ship) {
     if (ship.isSunk()) {
       // console.log(ship.type);
-      const index = this.placedShip.findIndex((ship) => ship.type === ship.type);
+      const index = this.placedShip.findIndex((shipIndex) => shipIndex.type === ship.type);
 
       // console.log(index);
       if (index !== -1) {
