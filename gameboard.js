@@ -66,6 +66,7 @@ export class GameBoard {
   }
 
   receiveAttack([y, x]) {
+    console.log(`"The receive attack ${y}, ${x}`)
     const cell = this.board[y]?.[x];
     console.log(cell);
     // if (cell.state === "hit") {

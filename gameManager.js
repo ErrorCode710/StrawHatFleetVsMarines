@@ -18,7 +18,10 @@ export class GameManager {
     this.render();
   }
   gameLoop(y, x) {
-    console.log(y, x);
+    // console.log(y, x);
+    // 1. Player 1 human attack on Ai's board
+    // Second call
+    // 1. Player 2 Ai attack on Humans board
     const result = this.opponent().gameBoard.receiveAttack([y, x]);
 
     this.render();
@@ -28,17 +31,33 @@ export class GameManager {
       return;
     }
 
+    const justPlayed = this.currentPlayer;
+    // 2. Switch turns to Ai so that it can attack the player 1 board
+    // second call
+    // 2. Switch turns to Human so that it would not loop on the if statement
+    console.log("Who is currentPlayer:", this.currentPlayer.playerName);
     this.switchTurns();
-    // if player is ai wait for there turn
+    console.log("Who is currentPlayer:", this.currentPlayer.playerName);
+
+    if (justPlayed.isPlayerAi) {
+      justPlayed.getResult(result); // now AI gets correct feedback
+    }
+    // 3. if player is ai wait for there turn
+    // second call
+    // 3. skip this because the current player now is Human
     if (this.currentPlayer.isPlayerAi) {
-      console.log("Ai Turn");
+      this.currentPlayer.getResult(result);
+      console.log(this.currentPlayer.playerName);
       const [aiY, aiX] = this.currentPlayer.AiPlayer();
-      console.log(aiY, aiX);
-      const resultAi = this.gameLoop(aiY, aiX);
-      this.currentPlayer.getResult(resultAi);
+      // console.log(aiY, aiX);
+      this.gameLoop(aiY, aiX);
+      return;
       // this.opponent().gameBoard.receiveAttack([aiY, aiX]);
       // this.render();
     }
+
+    // return the result on the resultAi
+    // return the result on the first call
     return result;
   }
   switchTurns() {
