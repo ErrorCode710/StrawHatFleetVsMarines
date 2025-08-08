@@ -2,18 +2,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./styles/style.css" />
     <title>Document</title>
   </head>
   <body>
     <main>
-      <section>
-        <h1>Player Human</h1>
-        <div class="gameboard gameBoard--player1" id="player1"></div>
+      <section class="home" id="home-screen">
+        <h1 class="home__title">Battleship</h1>
+        <div class="home__menu">
+          <button class="home__button" id="pvp">Player vs Player</button>
+          <button class="home__button" id="pva">Player vs AI</button>
+        </div>
       </section>
-      <section>
-        <h1>Player AI</h1>
-        <div class="gameboard gameBoard--player2" id="player2"></div>
+
+      <section class="game-screen">
+        <section>
+          <h1>Player Human</h1>
+          <div class="gameboard gameBoard--player1" id="player1"></div>
+        </section>
+        <section>
+          <h1>Player AI</h1>
+          <div class="gameboard gameBoard--player2" id="player2"></div>
+        </section>
       </section>
     </main>
     <script type="module" src="./main.js"></script>

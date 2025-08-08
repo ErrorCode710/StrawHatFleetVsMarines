@@ -11,15 +11,6 @@ export class Player {
   realPlayer() {}
   AiPlayer() {
     if (!this.isPlayerAi) return;
-
-    // return [y, x];
-    // const coord = this.getRandomMoves();
-
-    // this.attackCoord.add(coord);
-    // const [y, x] = coord.split(",").map(Number);
-    // const adjacentTiles = this.getAdjacentTiles(y, x);
-    // console.log(adjacentTiles);
-    // return [y, x];
     console.log("Queue length:", this.queue.length, "=>", this.queue);
 
     if (this.queue.length <= 0) {
@@ -55,7 +46,7 @@ export class Player {
       // tiles.forEach(("tile" => {this.queue.push(tiles)})
 
       tiles.forEach((tile) => {
-        this.queue.push(tile);
+        this.queue.unshift(tile);
       });
     }
   }
@@ -73,6 +64,7 @@ export class Player {
 
     return coord;
   }
+
   isCoordsUnique(y, x) {
     const coords = `${y},${x}`;
     const queueSet = new Set(this.queue.map((value) => value.join(",")));
@@ -107,5 +99,27 @@ export class Player {
       }
     }
     return tile;
+  }
+  getPreciseTiles() {}
+
+  aiHardMode(opponentBoard) {
+    if (this.queue.length <= 0) {
+      for (let y = 0; y < opponentBoard.length; y++) {
+        for (let x = 0; x < opponentBoard[y].length; x++) {
+          if (typeof opponentBoard[y][x] === "object") {
+            console.log("Ship is here!");
+            this.queue.push([y, x]);
+          }
+        }
+      }
+
+      // this.queue.push(tiles);
+    }
+    // if the cell is not equal to 0 and miss add the coordinates to the list of tiles
+    console.log(this.queue);
+
+    const shift = this.queue.shift();
+    console.log(shift);
+    return shift;
   }
 }

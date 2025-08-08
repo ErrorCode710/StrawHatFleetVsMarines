@@ -18,6 +18,7 @@ export class GameManager {
     this.render();
   }
   gameLoop(y, x) {
+    console.log(this.player1.gameBoard);
     // console.log(y, x);
     // 1. Player 1 human attack on Ai's board
     // Second call
@@ -49,6 +50,7 @@ export class GameManager {
       this.currentPlayer.getResult(result);
       console.log(this.currentPlayer.playerName);
       const [aiY, aiX] = this.currentPlayer.AiPlayer();
+      // const [aiY, aiX] = this.currentPlayer.aiHardMode(this.opponent().gameBoard.board);
       // console.log(aiY, aiX);
       this.gameLoop(aiY, aiX);
       return;
@@ -69,10 +71,12 @@ export class GameManager {
   opponent() {
     return this.currentPlayer === this.player1 ? this.player2 : this.player1;
   }
+  
   render() {
     // we can refractor this like only render after attack
     renderBoard(this.player1.gameBoard, "player1");
     renderBoard(this.player2.gameBoard, "player2");
   }
   getAttackCoordinates() {}
+  
 }

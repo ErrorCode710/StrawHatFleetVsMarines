@@ -1,6 +1,6 @@
-import { Player } from "./player.js";
-import { renderBoard } from "./dom.js";
-import { GameManager } from "./gameManager.js";
+import { Player } from "./scripts/player.js";
+import { renderBoard } from "./scripts/dom.js";
+import { GameManager } from "./scripts/gameManager.js";
 
 const gameManager = new GameManager();
 gameManager.startGame();
@@ -24,6 +24,9 @@ const player2Board = document.querySelector("#player1"); // player2 attacks play
     gameManager.gameLoop(y, x);
   });
 });
+
+
+
 
 /*
 

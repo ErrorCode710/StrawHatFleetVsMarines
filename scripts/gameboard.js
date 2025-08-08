@@ -55,6 +55,9 @@ export class GameBoard {
     // we need to place all of the ship on the shipconfig
     // for every ships on the ship config
   }
+  placeShipSpecific(){
+    
+  }
   isShipAlreadyExist(axis, size, [startY, startX]) {
     for (let i = 0; i < size; i++) {
       const x = axis === "X" ? startX + i : startX;
