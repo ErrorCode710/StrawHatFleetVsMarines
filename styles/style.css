@@ -1,47 +1,133 @@
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+:root {
+  /* Rust */
+  --color-rust: #b3480b;
+
+  /* Navy Blue */
+  --color-navy-blue: #09086e;
+
+  /* Crayola's Absolute Zero */
+  --color-absolute-zero: #0b44c8;
+
+  /* Picton Blue */
+  --color-picton-blue: #4dcaf6;
+
+  /* Banana Yellow */
+  --color-banana-yellow: #fddf28;
+
+  /* KU Crimson */
+  --color-ku-crimson: #dc0f0d;
+
+  --text-primary: #1a1a1a;
+}
+
 body {
   display: grid;
   place-content: center;
   min-height: 100vh;
   margin: 0;
+  color: var(--text-primary);
+  background-image: url("../assets/OnePieceBg.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative; /* Needed for overlay positioning */
+  /* font-family: "Onepiece", sans-serif; */
 }
 
-main {
+@font-face {
+  font-family: "Onepiece"; /* name you will use in CSS */
+  src: url("../assets/onepiece.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+main,
+section {
+  position: relative;
+  z-index: 1; /* keep content above overlay */
+}
+
+/* main {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
+  grid-template-columns: 1fr auto;
 
-.gameboard {
-  display: grid;
-  grid-template-columns: repeat(10, 30px);
-  grid-template-rows: repeat(10, 30px);
-  gap: 0;
-  padding: 4px;
-  border-radius: 4px;
-}
+} */
 
-.gameBoard__cell {
-  width: 30px;
-  height: 30px;
-  background-color: #eee;
-  border: 1px solid #9ca3af; /* Tailwind's gray-400 */
-}
-
-/* Optional: Distinct border color on hover */
-.gameBoard__cell:hover {
-  background-color: #2563eb; /* Tailwind blue-600 */
-  cursor: pointer;
-}
-
-/* Cell states */
-.gameBoard__cell.ship {
-  background-color: rgb(0, 251, 84);
-}
-
-.gameBoard__cell.hit {
-  background-color: red;
-}
-
-.gameBoard__cell.miss {
-  background-color: blue;
+.hidden {
+  display: none !important;
 }

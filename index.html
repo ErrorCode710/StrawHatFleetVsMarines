@@ -3,27 +3,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/game.css" />
+    <link rel="stylesheet" href="./styles/home.css" />
     <title>Document</title>
   </head>
   <body>
     <main>
-      <section class="home" id="home-screen">
-        <h1 class="home__title">Battleship</h1>
-        <div class="home__menu">
-          <button class="home__button" id="pvp">Player vs Player</button>
-          <button class="home__button" id="pva">Player vs AI</button>
+      <section class="player-name hidden" id="player-name-screen">
+        <div class="input-container">
+          <form class="player-name__form" autocomplete="off">
+            <input
+              type="text"
+              id="player-name-input"
+              name="playerName"
+              class="player-name__input"
+              placeholder="Fleet Name"
+              required
+            />
+
+            <button type="submit" class="player-name__button">Enter</button>
+          </form>
         </div>
       </section>
 
-      <section class="game-screen">
-        <section>
-          <h1>Player Human</h1>
-          <div class="gameboard gameBoard--player1" id="player1"></div>
-        </section>
-        <section>
-          <h1>Player AI</h1>
-          <div class="gameboard gameBoard--player2" id="player2"></div>
-        </section>
+      <section class="home" id="home-screen">
+        <img src="./assets/logo.png" alt="StrawHat's fleet vs Marines" />
+        <!-- <h1 class="home__title">StrawHat Fleet Vs Marines</h1> -->
+        <div class="home__menu">
+          <button class="learn-more home__button" id="pvp">Player vs Player</button>
+          <button class="learn-more home__button" id="pva">Player vs AI</button>
+        </div>
+      </section>
+
+      <section class="game-screen hidden" id="game-screen">
+        <div class="game-screen__player">
+          <h2 class="game-screen__title">Player Human</h2>
+          <div class="gameboard gameboard--player1" id="player1"></div>
+        </div>
+        <div class="game-screen__player">
+          <h2 class="game-screen__title">Player AI</h2>
+          <div class="gameboard gameboard--player2" id="player2"></div>
+        </div>
       </section>
     </main>
     <script type="module" src="./main.js"></script>

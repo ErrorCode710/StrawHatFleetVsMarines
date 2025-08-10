@@ -1,0 +1,36 @@
+
+.gameboard {
+  display: grid;
+  grid-template-columns: repeat(10, 30px);
+  grid-template-rows: repeat(10, 30px);
+  gap: 0;
+  padding: 4px;
+  border-radius: 4px;
+}
+d__cell.hit {
+  background-color: red;
+}
+
+.gameBoard__cell.miss {
+  background-color: blue;
+}
+
+.gameBoard__cell {
+  width: 30px;
+  height: 30px;
+  background-color: #eee;
+  border: 1px solid #9ca3af; /* Tailwind's gray-400 */
+}
+
+/* Optional: Distinct border color on hover */
+.gameBoard__cell:hover {
+  background-color: #2563eb; /* Tailwind blue-600 */
+  cursor: pointer;
+}
+
+/* Cell states */
+.gameBoard__cell.ship {
+  background-color: rgb(0, 251, 84);
+}
+
+.gameBoar

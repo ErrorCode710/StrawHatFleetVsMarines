@@ -1,6 +1,11 @@
 // for update
 import { Ship } from "./ship.js";
 
+let playerNames = {
+  player1: "",
+  player2: "",
+};
+
 export function renderBoard(gameBoard, playerBoard) {
   const boardContainer = document.getElementById(playerBoard);
   // console.log(boardContainer);
@@ -28,6 +33,57 @@ export function renderBoard(gameBoard, playerBoard) {
   }
 }
 
+export function renderPlayerNameInput(player) {
+  console.log("running");
+  const playerNameScreen = document.querySelector("#player-name-screen");
+  const playerNameInput = document.querySelector(".player-name__input");
+
+  playerNameInput.placeholder = `${player} Fleet Name`;
+  const homeScreen = document.querySelector("#home-screen");
+  const gameScreen = document.querySelector("#game-screen");
+  playerNameScreen.classList.remove("hidden");
+  homeScreen.classList.add("hidden");
+  gameScreen.classList.add("hidden");
+  playerNameForm(player);
+}
+
+function playerNameForm(player) {
+  const form = document.querySelector(".player-name__form");
+  const btn = document.querySelector(".player-name__button");
+  const playerNameInput = document.querySelector("#player-name-input");
+
+  form.onsubmit = (event) => {
+    event.preventDefault();
+    const name = playerNameInput.value.trim();
+    if (name) {
+      console.log(`${player} Name:`, name);
+
+      if (player === "Player 1") {
+        playerNames.player1 = name;
+        btn.textContent = "Start Game";
+        playerNameInput.value = "";
+        renderPlayerNameInput("Player 2");
+      } else {
+        playerNames.player2 = name;
+        console.log("Both players named, start game!");
+        startGame();
+      }
+    }
+  };
+}
+function startGame() {
+  const playerNameScreen = document.querySelector("#player-name-screen");
+  const gameScreen = document.querySelector("#game-screen");
+
+  playerNameScreen.classList.add("hidden");
+  gameScreen.classList.remove("hidden");
+
+  console.log("Starting game with:");
+  console.log("Player 1:", playerNames.player1);
+  console.log("Player 2:", playerNames.player2);
+
+  // You can now pass `playerNames.player1` and `playerNames.player2` to your game logic
+}
 function cell(y, x, value) {
   const element = document.createElement("div");
   const dataset = (element.dataset.coord = `${y},${x}`);
@@ -35,4 +91,3 @@ function cell(y, x, value) {
 
   return element;
 }
-
