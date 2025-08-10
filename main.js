@@ -1,5 +1,5 @@
 import { Player } from "./scripts/player.js";
-import { renderPlayerNameInput } from "./scripts/dom.js";
+import { handlePlayerNameEntry } from "./scripts/dom.js";
 import { GameManager } from "./scripts/gameManager.js";
 
 const gameManager = new GameManager();
@@ -12,14 +12,16 @@ const homeScreen = document.querySelector("#home-screen");
 const gameScreen = document.querySelector("#game-screen");
 
 document.querySelector("#pva").addEventListener("click", () => {
-  renderPlayerNameInput();
+  // renderPlayerNameInput();
+  handlePlayerNameEntry("Player 1");
   // homeScreen.classList.add("hidden");
   // gameScreen.classList.remove("hidden");
 });
 
 document.querySelector("#pvp").addEventListener("click", () => {
-  renderPlayerNameInput("Player 1");
-  
+  // renderPlayerNameInput("Player 1");
+  handlePlayerNameEntry("Player 1");
+
   // homeScreen.classList.add("hidden");
   // gameScreen.classList.remove("hidden");
 });

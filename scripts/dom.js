@@ -41,9 +41,22 @@ export function renderPlayerNameInput(player) {
   playerNameInput.placeholder = `${player} Fleet Name`;
   const homeScreen = document.querySelector("#home-screen");
   const gameScreen = document.querySelector("#game-screen");
+
   playerNameScreen.classList.remove("hidden");
   homeScreen.classList.add("hidden");
   gameScreen.classList.add("hidden");
+  playerNameForm(player);
+}
+function renderPlayerNameScreen(player) {
+  const playerNameInput = document.querySelector(".player-name__input");
+  playerNameInput.placeholder = `${player} Fleet Name`;
+
+  document.querySelector("#player-name-screen").classList.remove("hidden");
+  document.querySelector("#home-screen").classList.add("hidden");
+  document.querySelector("#game-screen").classList.add("hidden");
+}
+export function handlePlayerNameEntry(player) {
+  renderPlayerNameScreen(player);
   playerNameForm(player);
 }
 
@@ -78,12 +91,18 @@ function startGame() {
   playerNameScreen.classList.add("hidden");
   gameScreen.classList.remove("hidden");
 
-  console.log("Starting game with:");
-  console.log("Player 1:", playerNames.player1);
-  console.log("Player 2:", playerNames.player2);
+  renderPlayersName();
 
   // You can now pass `playerNames.player1` and `playerNames.player2` to your game logic
 }
+function renderPlayersName() {
+  const player1 = document.querySelector(".game-screen__player--1");
+  const player2 = document.querySelector(".game-screen__player--2");
+
+  player1.textContent = playerNames.player1;
+  player2.textContent = playerNames.player2;
+}
+
 function cell(y, x, value) {
   const element = document.createElement("div");
   const dataset = (element.dataset.coord = `${y},${x}`);
