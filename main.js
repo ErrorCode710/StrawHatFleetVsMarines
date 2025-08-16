@@ -1,6 +1,7 @@
 import { Player } from "./scripts/player.js";
-import { handlePlayerNameEntry, showPhase } from "./scripts/dom.js";
+import { handlePlayerNameEntry, showPhase, buildSetUpBoard, setUpBoard } from "./scripts/dom.js";
 import { GameManager } from "./scripts/gameManager.js";
+import { GameBoard } from "./scripts/gameboard.js";
 
 const player1Board = document.querySelector("#player2"); // player1 attacks player2's board
 const player2Board = document.querySelector("#player1"); // player2 attacks player1's board
@@ -46,6 +47,7 @@ The error occurs when I hit the same coords with
 let gameState = {
   state: "menu",
   mode: null,
+  fleetName: "StrawHat",
 };
 
 showPhase(gameState, "menu");
@@ -53,23 +55,19 @@ showPhase(gameState, "menu");
 document.querySelectorAll(".home__button").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     gameState.mode = e.target.dataset.mode;
-    console.log(e.target.dataset.mode);
-    console.log(gameState.mode);
+
     showPhase(gameState, "name-entry");
-    handlePlayerNameEntry(gameState.mode, "Player 1");
+    // handlePlayerNameEntry(gameState.mode, "Player 1");
   });
 });
 
-showPhase(gameState, "board-setup");
-
 // Player One Name Entry and Board Setup
-// document.querySelector(".player-name__form").addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   // grab values
-//   const player1 = e.target.player1Name.value.trim();
-//   const player2 = gameState.mode === "pvp" ? e.target.player2Name.value.trim() : "AI";
-//   console.log("Players:", player1, player2);
+document.querySelector(".player-name__form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  // grab values
+  gameState.fleetName = e.target.player1Name.value.trim();
+  showPhase(gameState, "board-setup");
+  setUpBoard()
+});
 
-//   showPhase(gameState, "board-setup");
-// });
 // // just get the coordinates and dynamically input on the placeship

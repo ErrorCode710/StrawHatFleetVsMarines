@@ -21,15 +21,6 @@
               required
             />
 
-            <!-- <input
-              type="text"
-              id="player2-name-input"
-              name="player2Name"
-              class="player-name__input"
-              placeholder="Player 2 Fleet Name"
-              required
-            /> -->
-
             <button type="submit" class="player-name__button">Enter</button>
           </form>
         </div>
@@ -39,27 +30,43 @@
         <img src="./assets/logo.png" alt="StrawHat's fleet vs Marines" />
         <!-- <h1 class="home__title">StrawHat Fleet Vs Marines</h1> -->
         <div class="home__menu">
-          <button class="learn-more home__button" id="pvp" data-mode="pvp">Player vs Player</button>
-          <button class="learn-more home__button" id="pva" data-mode="pva">Player vs AI</button>
+          <button class="learn-more home__button" id="pvp" data-mode="pvp">Start</button>
         </div>
       </section>
       <section class="board-setup board-setup-screen screen" data-phase="board-setup">
         <div class="board-setup__container">
-          <!-- Ship selection section -->
-          <div class="board-setup__ship-selection">
-            <h2 class="board-setup__title">Destroyer</h2>
-            <div class="board-setup__ships" id="ship-selection"></div>
-            <input type="text" id="ship-input-Y" placeholder="Y" />
-            <input type="text" id="ship-input-X" placeholder="X" />
-            <input type="text" id="ship-input-axis" placeholder="Axis" />
-          </div>
-
           <!-- Player board section -->
           <div class="board-setup__player">
             <h2 class="board-setup__player-name" id="player1-name">Player Human</h2>
             <div class="gameboard gameboard--player1" id="player1-board"></div>
           </div>
+
+          <div class="board-setup__ships-container">
+            <div class="board-setup__ships">
+              <div class="board-setup__ship-card">
+                <img class="board-setup__ship-img" src="./assets/sunny.png" alt="Sunny" />
+                <h3 class="board-setup__ship-title">Sunny</h3>
+              </div>
+              <div class="board-setup__ship-card">
+                <img class="board-setup__ship-img" src="./assets/merry.png" alt="Merry" />
+                <h3 class="board-setup__ship-title">Merry</h3>
+              </div>
+              <div class="board-setup__ship-card">
+                <img class="board-setup__ship-img" src="./assets/another.png" alt="Another Ship" />
+                <h3 class="board-setup__ship-title">Another</h3>
+              </div>
+            </div>
+            <div class="board-setup__ship-card">
+              <img class="board-setup__ship-img" src="./assets/sunny.png" alt="Sunny" />
+              <h3 class="board-setup__ship-title">Sunny</h3>
+            </div>
+            <div class="board-setup__ship-card">
+              <img class="board-setup__ship-img" src="./assets/sunny.png" alt="Sunny" />
+              <h3 class="board-setup__ship-title">Sunny</h3>
+            </div>
+          </div>
         </div>
+        
       </section>
       <section class="game-screen screen" id="game-screen" data-phase="gameplay">
         <div class="game-screen__player">
