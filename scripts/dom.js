@@ -55,12 +55,12 @@ function renderPlayerNameScreen(player) {
   document.querySelector("#home-screen").classList.add("hidden");
   document.querySelector("#game-screen").classList.add("hidden");
 }
-export function handlePlayerNameEntry(player) {
-  renderPlayerNameScreen(player);
-  playerNameForm(player);
+export function handlePlayerNameEntry(gameMode, player) {
+  // renderPlayerNameScreen(player);
+  playerNameForm(gameMode, player);
 }
 
-function playerNameForm(player) {
+function playerNameForm(gameMode, player) {
   const form = document.querySelector(".player-name__form");
   const btn = document.querySelector(".player-name__button");
   const playerNameInput = document.querySelector("#player-name-input");
@@ -70,20 +70,27 @@ function playerNameForm(player) {
     const name = playerNameInput.value.trim();
     if (name) {
       console.log(`${player} Name:`, name);
+      console.log(gameMode);
+      if (gameMode === "pvp") {
+        if (player === "Player 1") {
+          playerNames.player1 = name;
+          btn.textContent = "Start Game";
+          playerNameInput.value = "";
 
-      if (player === "Player 1") {
-        playerNames.player1 = name;
-        btn.textContent = "Start Game";
-        playerNameInput.value = "";
-        renderPlayerNameInput("Player 2");
+          renderPlayerNameInput("Player 2");
+        } else {
+          playerNames.player2 = name;
+          console.log("Both players named, start game!");
+          // startGame();
+        }
       } else {
-        playerNames.player2 = name;
-        console.log("Both players named, start game!");
-        startGame();
+        playerNames.player1 = name;
+        playerNames.player2 = "AI";
       }
     }
   };
 }
+
 function startGame() {
   const playerNameScreen = document.querySelector("#player-name-screen");
   const gameScreen = document.querySelector("#game-screen");
@@ -92,8 +99,6 @@ function startGame() {
   gameScreen.classList.remove("hidden");
 
   renderPlayersName();
-
-  // You can now pass `playerNames.player1` and `playerNames.player2` to your game logic
 }
 function renderPlayersName() {
   const player1 = document.querySelector(".game-screen__player--1");
@@ -109,4 +114,11 @@ function cell(y, x, value) {
   element.classList.add("gameBoard__cell", value);
 
   return element;
+}
+
+export function showPhase(state, phase) {
+  document.querySelectorAll(".screen").forEach((el) => {
+    el.style.display = el.dataset.phase === phase ? "flex" : "none";
+  });
+  state.phase = phase;
 }

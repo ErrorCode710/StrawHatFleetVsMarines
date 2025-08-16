@@ -13,11 +13,15 @@ export class GameManager {
     this.currentPlayer = this.player1;
   }
   startGame() {
-    this.player1.gameBoard.placeShipRandomly();
+    // this.player1.gameBoard.placeShipRandomly();
+    // this.player2.gameBoard.placeShipRandomly();
+    this.player1.gameBoard.placeShipSpecific();
     this.player2.gameBoard.placeShipRandomly();
+
     this.render();
   }
   gameLoop(y, x) {
+    console.log("gameloop running");
     console.log(this.player1.gameBoard);
     // console.log(y, x);
     // 1. Player 1 human attack on Ai's board
@@ -71,12 +75,11 @@ export class GameManager {
   opponent() {
     return this.currentPlayer === this.player1 ? this.player2 : this.player1;
   }
-  
+
   render() {
     // we can refractor this like only render after attack
     renderBoard(this.player1.gameBoard, "player1");
     renderBoard(this.player2.gameBoard, "player2");
   }
   getAttackCoordinates() {}
-  
 }

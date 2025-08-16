@@ -36,6 +36,7 @@ export class GameBoard {
         this.board[startY][startX + i] = { ship: ship, index: i, state: "idle" };
       }
     }
+    console.log("Ship Placed Successfully");
     this.placedShip.push(ship);
     return true;
   }
@@ -55,8 +56,20 @@ export class GameBoard {
     // we need to place all of the ship on the shipconfig
     // for every ships on the ship config
   }
-  placeShipSpecific(){
-    
+  placeShipSpecific() {
+    for (const ship of shipsConfig) {
+      const x = parseInt(document.querySelector("#ship-input-X").value, 10);
+      const y = parseInt(document.querySelector("#ship-input-Y").value, 10);
+      const axis = document.querySelector("#ship-input-axis").value.trim();
+
+      if (isNaN(x) || isNaN(y)) {
+        console.error("Invalid coordinates, please enter numbers.");
+        return;
+      }
+      console.log(x, y, axis);
+
+      placed = this.placeShip(ship.name, axis, [y, x]);
+    }
   }
   isShipAlreadyExist(axis, size, [startY, startX]) {
     for (let i = 0; i < size; i++) {
@@ -69,7 +82,7 @@ export class GameBoard {
   }
 
   receiveAttack([y, x]) {
-    console.log(`"The receive attack ${y}, ${x}`)
+    console.log(`"The receive attack ${y}, ${x}`);
     const cell = this.board[y]?.[x];
     console.log(cell);
     // if (cell.state === "hit") {

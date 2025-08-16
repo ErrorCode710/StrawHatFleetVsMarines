@@ -7,13 +7,6 @@
   padding: 4px;
   border-radius: 4px;
 }
-d__cell.hit {
-  background-color: red;
-}
-
-.gameBoard__cell.miss {
-  background-color: blue;
-}
 
 .gameBoard__cell {
   width: 30px;
@@ -30,7 +23,13 @@ d__cell.hit {
 
 /* Cell states */
 .gameBoard__cell.ship {
-  background-color: rgb(0, 251, 84);
+  background-color: rgb(195, 249, 1);
 }
 
-.gameBoar
+.gameBoard__cell.hit {
+  background-color: red;
+}
+
+.gameBoard__cell.miss {
+  background-color: blue;
+}
