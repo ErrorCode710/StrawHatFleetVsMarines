@@ -144,11 +144,13 @@ let startX = 0,
   newX = 0,
   newY = 0;
 
+let orientation = "X";
+
 let placeholder = null;
 let draggingShip = null;
+let shipPlace = [];
 
 const ships = document.querySelectorAll(".board-setup__ship-card");
-const board = document.querySelector("#player1-board");
 
 ships.forEach((ship) => {
   ship.addEventListener("mousedown", (e) => {
@@ -159,31 +161,118 @@ ships.forEach((ship) => {
     };
   });
 });
+const board = document.querySelector("#player1-board");
 
-board.addEventListener("mouseup", (e) => {
+board.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  if (!draggingShip) return;
+
   const cell = e.target.closest(".gameBoard__cell");
-  if (!cell || !draggingShip) return;
+  if (!cell) return;
 
-  const coord = cell.dataset.coord.split(",");
+  document.querySelectorAll(".highlight, .danger").forEach((c) => c.classList.remove("highlight", "danger"));
 
-  console.log(coord);
-  const x = parseInt(coord[1]);
-  const y = parseInt(coord[0]);
+  const [row, col] = cell.dataset.coord.split(",").map(Number);
+  const y = row;
+  const x = col;
+  const length = draggingShip.length;
 
-  placeShipOnBoard(x, y, draggingShip);
-  draggingShip = null;
+  const fitsOnBoard = orientation === "X" ? x + length - 1 < 10 : y + length - 1 < 10;
+
+  let canPlace = true;
+  for (let i = 0; i < length; i++) {
+    const targetX = orientation === "X" ? x + i : x;
+    const targetY = orientation === "Y" ? y + i : y;
+    const targetCell = board.querySelector(`[data-coord="${targetY},${targetX}"]`);
+    if (!targetCell || targetCell.classList.contains("occupied")) {
+      canPlace = false;
+    }
+  }
+
+  for (let i = 0; i < length; i++) {
+    const targetX = orientation === "X" ? x + i : x;
+    const targetY = orientation === "Y" ? y + i : y;
+    const targetCell = board.querySelector(`[data-coord="${targetY},${targetX}"]`);
+    if (targetCell) {
+      targetCell.classList.add(fitsOnBoard && canPlace ? "highlight" : "danger");
+    }
+  }
 });
 
-function placeShipOnBoard(x, y, ship) {
-  const shipEl = document.createElement("div");
-  shipEl.classList.add("placed-ship");
-  shipEl.style.gridColumn = `${x + 1} / span ${ship.length}`;
-  shipEl.style.gridRow = `${y + 1}`;
+// Attach drop once
+board.addEventListener("drop", (e) => {
+  e.preventDefault();
+  if (!draggingShip) return;
 
-  const img = document.createElement("img");
-  img.src = ship.imgSrc;
-  img.alt = ship.type;
-  shipEl.appendChild(img);
+  const cell = e.target.closest(".gameBoard__cell");
+  if (!cell) return;
 
-  board.appendChild(shipEl);
-}
+  const [row, col] = cell.dataset.coord.split(",").map(Number);
+  const y = row;
+  const x = col;
+  const length = draggingShip.length;
+
+  const fitsOnBoard = orientation === "X" ? x + length - 1 < 10 : y + length - 1 < 10;
+
+  if (!fitsOnBoard) {
+    document.querySelectorAll(".danger").forEach((c) => c.classList.remove("danger"));
+    draggingShip = null;
+    return;
+  }
+
+  for (let i = 0; i < length; i++) {
+    const targetX = orientation === "X" ? x + i : x;
+    const targetY = orientation === "Y" ? y + i : y;
+    const targetCell = board.querySelector(`[data-coord="${targetY},${targetX}"]`);
+    if (targetCell) targetCell.classList.add("occupied");
+  }
+
+  shipPlace.push({
+    shipType: draggingShip.type,
+    coords: [row, col],
+    axis: orientation,
+  });
+
+  console.log(shipPlace);
+
+  // Clear highlights
+  document.querySelectorAll(".highlight, .danger").forEach((c) => c.classList.remove("highlight", "danger"));
+
+  // placeholder
+  const ship = document.querySelector(`[data-ship-type="${draggingShip.type}"]`);
+  
+  placeholder = document.createElement("div");
+  placeholder.classList.add("board-setup__ship-placeholder");
+  ship.parentNode.insertBefore(placeholder, ship);
+  
+  ship.remove()
+
+  draggingShip = null; // reset after drop
+});
+// board.addEventListener("mouseup", (e) => {
+//   const cell = e.target.closest(".gameBoard__cell");
+//   if (!cell || !draggingShip) return;
+
+//   const coord = cell.dataset.coord.split(",");
+
+//   console.log(coord);
+//   const x = parseInt(coord[1]);
+//   const y = parseInt(coord[0]);
+
+//   placeShipOnBoard(x, y, draggingShip);
+//   draggingShip = null;
+// });
+
+// function placeShipOnBoard(x, y, ship) {
+//   const shipEl = document.createElement("div");
+//   shipEl.classList.add("placed-ship");
+//   shipEl.style.gridColumn = `${x + 1} / span ${ship.length}`;
+//   shipEl.style.gridRow = `${y + 1}`;
+
+//   const img = document.createElement("img");
+//   img.src = ship.imgSrc;
+//   img.alt = ship.type;
+//   shipEl.appendChild(img);
+
+//   board.appendChild(shipEl);
+// }

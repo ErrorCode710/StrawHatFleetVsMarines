@@ -12,6 +12,12 @@
   background-color: transparent;
   border: 2px solid white;
 }
+.gameBoard__cell.highlight {
+  background-color: lightblue;
+}
+.gameBoard__cell.danger {
+  background-color: lightcoral;
+}
 
 /* Optional: Distinct border color on hover */
 .gameBoard__cell:hover {
