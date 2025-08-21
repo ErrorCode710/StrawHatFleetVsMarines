@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="./styles/style.css" />
     <link rel="stylesheet" href="./styles/game.css" />
     <link rel="stylesheet" href="./styles/home.css" />
-    <title>Document</title>
+    <title>StrawHat Vs Marines</title>
   </head>
   <body>
     <main>
@@ -39,8 +39,8 @@
           <div class="board-setup__player">
             <h2 class="board-setup__player-name" id="player1-name">Player Human</h2>
             <div class="board-setup__axis-btn-container">
-              <button>Y axis</button>
-              <button>X axis</button>
+              <button class="axis-btn" data-axis="Y">Y axis</button>
+              <button class="axis-btn" data-axis="X">X axis</button>
             </div>
             <div class="gameboard gameboard--player1" id="player1-board"></div>
           </div>
@@ -56,15 +56,15 @@
                 <h3 class="board-setup__ship-title">Merry</h3>
               </div>
               <div class="board-setup__ship-card" draggable="true" data-ship-length="3" data-ship-type="Cruiser">
-                <img class="board-setup__ship-img" src="./assets/another.png" draggable="false" alt="Another Ship" />
+                <img class="board-setup__ship-img" src="./assets/tank.png" draggable="false" alt="Tank" />
                 <h3 class="board-setup__ship-title">Another</h3>
               </div>
               <div class="board-setup__ship-card" draggable="true" data-ship-length="3" data-ship-type="Submarine">
-                <img class="board-setup__ship-img" src="./assets/sunny.png" draggable="false" alt="Sunny" />
+                <img class="board-setup__ship-img" src="./assets/submarine.png" draggable="false" alt="Submarine" />
                 <h3 class="board-setup__ship-title">Sunny</h3>
               </div>
               <div class="board-setup__ship-card" draggable="true" data-ship-length="2" data-ship-type="Destroyer">
-                <img class="board-setup__ship-img" src="./assets/sunny.png" draggable="false" alt="Sunny" />
+                <img class="board-setup__ship-img" src="./assets/minimerry.png" draggable="false" alt="Mini Merry" />
                 <h3 class="board-setup__ship-title">Sunny</h3>
               </div>
             </div>
