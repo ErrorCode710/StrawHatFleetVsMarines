@@ -50,6 +50,8 @@ let gameState = {
   fleetName: "StrawHat",
 };
 
+let shipInfo = [];
+
 showPhase(gameState, "menu");
 
 document.querySelectorAll(".home__button").forEach((btn) => {
@@ -67,7 +69,14 @@ document.querySelector(".player-name__form").addEventListener("submit", (e) => {
   // grab values
   gameState.fleetName = e.target.player1Name.value.trim();
   showPhase(gameState, "board-setup");
-  setUpBoard()
+  setUpBoard();
+});
+
+document.querySelectorAll(".board-setup__ship-card").forEach((card) => {
+  const type = card.dataset.shipType;
+  console.log(type); // "Carrier", "Battleship", etc.
 });
 
 // // just get the coordinates and dynamically input on the placeship
+// i create an array of object for the coordinates for example like this [{shipType: Carrier, Coordinates: [2,2], Axis: "Y"}, {shipType: Destroyer, Coordinates: [2,2], Axis: "Y"}]
+// if i click or d

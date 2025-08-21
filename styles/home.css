@@ -17,9 +17,6 @@
 }
 
 /* From Uiverse.io by cssbuttons-io */
-:root {
-  --color-banana-yellow: #fddf28;
-}
 
 button {
   font-size: 18px;
@@ -54,7 +51,7 @@ button:before {
   content: "";
   transition: 0.7s cubic-bezier(0, 0.8, 0.26, 0.99);
   z-index: -1;
-  background-color: var(--color-banana-yellow) !important;
+  background-color: var(--color-banana-yellow);
   box-shadow: 0 -4px rgba(179, 146, 0, 0.5) inset, /* darker yellow */ 0 4px rgba(255, 255, 153, 0.8) inset,
     /* lighter highlight */ -4px 0 rgba(255, 255, 153, 0.5) inset, 4px 0 rgba(179, 146, 0, 0.5) inset;
 }
@@ -89,10 +86,16 @@ button:active:after {
   box-shadow: 0 0px 0 0 rgb(0 0 0 / 15%);
 }
 
-.player-name {
-  display: flex;
-  flex-direction: row;
+.setup-btn--reset {
+  background-color: var(--color-ku-crimson) !important;
 }
+
+.setup-btn--reset::before {
+  background-color: var(--color-ku-crimson) !important;
+  box-shadow: 0 -4px rgba(128, 0, 0, 0.5) inset, /* darker crimson */ 0 4px rgba(255, 200, 200, 0.8) inset,
+    /* lighter highlight */ -4px 0 rgba(255, 200, 200, 0.5) inset, 4px 0 rgba(128, 0, 0, 0.5) inset;
+}
+
 
 .player-name__form {
   display: flex;

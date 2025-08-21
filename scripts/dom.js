@@ -138,3 +138,52 @@ export function setUpBoard() {
   const board = { board: buildSetUpBoard() };
   renderBoard(board, "player1-board");
 }
+
+let startX = 0,
+  startY = 0,
+  newX = 0,
+  newY = 0;
+
+let placeholder = null;
+let draggingShip = null;
+
+const ships = document.querySelectorAll(".board-setup__ship-card");
+const board = document.querySelector("#player1-board");
+
+ships.forEach((ship) => {
+  ship.addEventListener("mousedown", (e) => {
+    draggingShip = {
+      type: ship.dataset.shipType,
+      length: parseInt(ship.dataset.shipLength),
+      imgSrc: ship.querySelector("img").src,
+    };
+  });
+});
+
+board.addEventListener("mouseup", (e) => {
+  const cell = e.target.closest(".gameBoard__cell");
+  if (!cell || !draggingShip) return;
+
+  const coord = cell.dataset.coord.split(",");
+
+  console.log(coord);
+  const x = parseInt(coord[1]);
+  const y = parseInt(coord[0]);
+
+  placeShipOnBoard(x, y, draggingShip);
+  draggingShip = null;
+});
+
+function placeShipOnBoard(x, y, ship) {
+  const shipEl = document.createElement("div");
+  shipEl.classList.add("placed-ship");
+  shipEl.style.gridColumn = `${x + 1} / span ${ship.length}`;
+  shipEl.style.gridRow = `${y + 1}`;
+
+  const img = document.createElement("img");
+  img.src = ship.imgSrc;
+  img.alt = ship.type;
+  shipEl.appendChild(img);
+
+  board.appendChild(shipEl);
+}
