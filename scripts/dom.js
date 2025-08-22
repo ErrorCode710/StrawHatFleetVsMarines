@@ -3,7 +3,6 @@ import { Ship } from "./ship.js";
 
 let playerNames = {
   player1: "",
-  player2: "",
 };
 
 export function renderBoard(gameBoard, playerBoard) {
@@ -137,25 +136,25 @@ export function buildSetUpBoard() {
 export function setUpBoard() {
   const board = { board: buildSetUpBoard() };
   renderBoard(board, "player1-board");
+  const ships = document.querySelectorAll(".board-setup__ship-card");
+
+  ships.forEach((ship) => {
+    ship.addEventListener("mousedown", (e) => {
+      draggingShip = {
+        type: ship.dataset.shipType,
+        length: parseInt(ship.dataset.shipLength),
+        imgSrc: ship.querySelector("img").src,
+      };
+    });
+  });
 }
 
 let orientation = "Y";
 
 let placeholder = null;
 let draggingShip = null;
-let shipPlace = [];
+export let shipPlace = [];
 
-const ships = document.querySelectorAll(".board-setup__ship-card");
-
-ships.forEach((ship) => {
-  ship.addEventListener("mousedown", (e) => {
-    draggingShip = {
-      type: ship.dataset.shipType,
-      length: parseInt(ship.dataset.shipLength),
-      imgSrc: ship.querySelector("img").src,
-    };
-  });
-});
 const board = document.querySelector("#player1-board");
 
 board.addEventListener("dragover", (e) => {
@@ -246,12 +245,8 @@ board.addEventListener("drop", (e) => {
   placeholder.classList.add("board-setup__ship-placeholder");
   ship.parentNode.insertBefore(placeholder, ship);
 
-  const imgSrc = ship.querySelector(".board-setup__ship-img").src;
-  console.log(imgSrc);
-  ship.remove();
-
-  // placeShipOnBoard(x, y, ship);
-  // placeShipAbsolute(x, y, length, orientation, imgSrc);
+  // ship.remove();
+  ship.classList.add("hidden");
 
   draggingShip = null; // reset after drop
 });
@@ -269,3 +264,54 @@ document.querySelectorAll(".axis-btn").forEach((btn) => {
     console.log(targetBtn.dataset);
   });
 });
+
+// document.querySelectorAll(".setup-btn").forEach((btn) => {
+//   btn.addEventListener("click", (e) => {
+//     const targetBtn = e.target;
+
+//     if (targetBtn.id === "btn-confirm") {
+//       console.log("Confirm");
+//     } else {
+//       resetBoard();
+//     }
+//   });
+// });
+
+document.querySelector("#btn-reset").addEventListener("click", () => {
+  resetBoard();
+});
+
+function confirm() {
+  // proceed to game setup phase
+  // send the placeShip data to gameManager
+}
+
+function resetBoard() {
+  const shipSelectionContaier = document.querySelector(".board-setup__ships-container");
+
+  shipSelectionContaier.innerHTML = `<div class="board-setup__ships-container">
+            <div class="board-setup__ships">
+              <div class="board-setup__ship-card" draggable="true" data-ship-length="5" data-ship-type="Carrier">
+                <img class="board-setup__ship-img" src="./assets/sunny.png" draggable="false" alt="Sunny">
+                <h3 class="board-setup__ship-title">Sunny</h3>
+              </div>
+              <div class="board-setup__ship-card" draggable="true" data-ship-length="4" data-ship-type="Battleship">
+                <img class="board-setup__ship-img" src="./assets/merry.png" draggable="false" alt="Merry">
+                <h3 class="board-setup__ship-title">Merry</h3>
+              </div>
+              <div class="board-setup__ship-card" draggable="true" data-ship-length="3" data-ship-type="Cruiser">
+                <img class="board-setup__ship-img" src="./assets/tank.png" draggable="false" alt="Tank">
+                <h3 class="board-setup__ship-title">Another</h3>
+              </div>
+              <div class="board-setup__ship-card" draggable="true" data-ship-length="3" data-ship-type="Submarine">
+                <img class="board-setup__ship-img" src="./assets/submarine.png" draggable="false" alt="Submarine">
+                <h3 class="board-setup__ship-title">Sunny</h3>
+              </div>
+              <div class="board-setup__ship-card" draggable="true" data-ship-length="2" data-ship-type="Destroyer">
+                <img class="board-setup__ship-img" src="./assets/minimerry.png" draggable="false" alt="Mini Merry">
+                <h3 class="board-setup__ship-title">Sunny</h3>
+              </div>
+            </div>
+          </div>`;
+  setUpBoard();
+}

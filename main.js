@@ -1,56 +1,18 @@
 import { Player } from "./scripts/player.js";
-import { handlePlayerNameEntry, showPhase, buildSetUpBoard, setUpBoard } from "./scripts/dom.js";
+import { handlePlayerNameEntry, showPhase, buildSetUpBoard, setUpBoard, shipPlace } from "./scripts/dom.js";
 import { GameManager } from "./scripts/gameManager.js";
 import { GameBoard } from "./scripts/gameboard.js";
 
 const player1Board = document.querySelector("#player2"); // player1 attacks player2's board
 const player2Board = document.querySelector("#player1"); // player2 attacks player1's board
 
-// const gameManager = new GameManager();
-// document.querySelector("#pva").addEventListener("click", () => {
-//   handlePlayerNameEntry("Player 1");
-//   gameManager.startGame();
-// });
-
-// document.querySelector("#pvp").addEventListener("click", () => {
-//   handlePlayerNameEntry("Player 1");
-//   gameManager.startGame();
-// });
-
-// [player1Board, player2Board].forEach((board) => {
-//   board.addEventListener("click", (e) => {
-//     if (!e.target.classList.contains("gameBoard__cell")) return;
-//     if (e.target.classList.contains("hit") || e.target.classList.contains("miss")) return;
-
-//     const coord = e.target.dataset.coord;
-//     const [y, x] = coord.split(",").map(Number);
-
-//     const isPlayer1Turn = gameManager.currentPlayer === gameManager.player1;
-//     console.log(isPlayer1Turn);
-//     console.log(board, player1Board);
-
-//     const isCorrectBoard = (isPlayer1Turn && board === player1Board) || (!isPlayer1Turn && board === player2Board);
-//     console.log("Im here");
-//     if (!isCorrectBoard) return;
-//     console.log("Im here too");
-
-//     gameManager.gameLoop(y, x);
-//   });
-// });
-
-/*
-
-The error occurs when I hit the same coords with 
-
-*/
+let game = null;
 
 let gameState = {
   state: "menu",
   mode: null,
   fleetName: "StrawHat",
 };
-
-let shipInfo = [];
 
 showPhase(gameState, "menu");
 
@@ -72,10 +34,36 @@ document.querySelector(".player-name__form").addEventListener("submit", (e) => {
   setUpBoard();
 });
 
-document.querySelectorAll(".board-setup__ship-card").forEach((card) => {
-  const type = card.dataset.shipType;
-  console.log(type); // "Carrier", "Battleship", etc.
+document.querySelector("#btn-confirm").addEventListener("click", () => {
+  showPhase(gameState, "gameplay");
+
+  
+  game = new GameManager();
+  game.startGame(shipPlace);
+
+  initBoardListeners()
 });
+
+
+
+function initBoardListeners() {
+  player1Board.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("gameBoard__cell")) return;
+    if (e.target.classList.contains("hit") || e.target.classList.contains("miss")) return;
+
+    const [y, x] = e.target.dataset.coord.split(",").map(Number);
+
+    const isPlayer1Turn = game.currentPlayer === game.player1;
+    const board = isPlayer1Turn ? player2Board : player1Board;
+
+    const isCorrectBoard =
+      (isPlayer1Turn && e.currentTarget === player1Board) || (!isPlayer1Turn && e.currentTarget === player2Board);
+
+    if (!isCorrectBoard) return;
+
+    game.gameLoop(y, x);
+  });
+}
 
 // // just get the coordinates and dynamically input on the placeship
 // i create an array of object for the coordinates for example like this [{shipType: Carrier, Coordinates: [2,2], Axis: "Y"}, {shipType: Destroyer, Coordinates: [2,2], Axis: "Y"}]

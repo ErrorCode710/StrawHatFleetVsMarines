@@ -12,13 +12,21 @@ export class GameManager {
     this.player2 = new Player("player2", true);
     this.currentPlayer = this.player1;
   }
-  startGame() {
+  startGame(shipInfo) {
     // this.player1.gameBoard.placeShipRandomly();
-    // this.player2.gameBoard.placeShipRandomly();
-    this.player1.gameBoard.placeShipSpecific();
     this.player2.gameBoard.placeShipRandomly();
+    this.shipCoordinates(shipInfo);
+    // this.player1.gameBoard.placeShipSpecific();
+
+    // this.player2.gameBoard.placeShipRandomly();
 
     this.render();
+  }
+  shipCoordinates(shipInfo) {
+    for (const ship of shipInfo) {
+      console.log(ship);
+      this.player1.gameBoard.placeShip(ship.shipType, ship.axis, [ship.coords[0], ship.coords[1]]);
+    }
   }
   gameLoop(y, x) {
     console.log("gameloop running");

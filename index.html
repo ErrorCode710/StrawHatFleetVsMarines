@@ -17,7 +17,7 @@
               id="player-name-input"
               name="player1Name"
               class="player-name__input"
-              placeholder="Player 1 Fleet Name"
+              placeholder="Fleet Name"
               required
             />
 
@@ -37,7 +37,7 @@
         <div class="board-setup__container">
           <!-- Player board section -->
           <div class="board-setup__player">
-            <h2 class="board-setup__player-name" id="player1-name">Player Human</h2>
+            <!-- <h2 class="board-setup__player-name" id="player1-name">Player Human</h2> -->
             <div class="board-setup__axis-btn-container">
               <button class="axis-btn" data-axis="Y">Y axis</button>
               <button class="axis-btn" data-axis="X">X axis</button>
@@ -71,8 +71,8 @@
           </div>
         </div>
         <div class="board-setup__btn-containers">
-          <button class="home__button">Confirm</button>
-          <button class="setup-btn--reset">Reset</button>
+          <button class="setup-btn home__button" id="btn-confirm">Confirm</button>
+          <button class="setup-btn setup-btn--reset" id="btn-reset">Reset</button>
         </div>
       </section>
       <section class="game-screen screen" id="game-screen" data-phase="gameplay">
