@@ -56,11 +56,11 @@ function initBoardListeners() {
       (isPlayer1Turn && e.currentTarget === player1Board) || (!isPlayer1Turn && e.currentTarget === player2Board);
 
     if (!isCorrectBoard) return;
-    
+
     const outcome = game.gameLoop(y, x);
 
     if (outcome?.status === "victory") {
-      showWinner(outcome.winner); 
+      showWinner(outcome.winner, gameState.fleetName);
     }
   });
 }

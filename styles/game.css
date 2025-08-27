@@ -199,3 +199,20 @@
   text-align: center;
   padding: 1rem;
 }
+
+dialog.winner-modal {
+  position: fixed; /* or absolute if you want it to scroll with the page */
+  inset: 0; /* or specific values like 0.5rem if you want padding */
+  margin: auto;
+  border: none;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* makes sure it's centered */
+dialog.winner-modal::backdrop {
+  background: rgba(0, 0, 0, 0.6); /* dim background */
+}

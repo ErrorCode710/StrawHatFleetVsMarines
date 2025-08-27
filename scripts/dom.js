@@ -129,11 +129,54 @@ export function showPhase(state, phase) {
   });
   state.phase = phase;
 }
-export function showWinner(winner) {
-  const overlay = document.createElement("div");
-  overlay.className = "winner-overlay";
-  overlay.textContent = winner === "player1" ? "Player 1 Wins!" : "Player 2 Wins!";
-  document.body.appendChild(overlay);
+export function showWinner(winner, fleetname) {
+  // Create dialog
+  const dialog = document.createElement("dialog");
+  dialog.className = "winner-modal";
+
+  // Winner message
+  const message = document.createElement("h2");
+  message.textContent = winner === "player1" ? `🎉 ${fleetname} Wins!` : "🎉 Marine Wins!";
+
+  // Play Again button
+  const playAgainBtn = document.createElement("button");
+  playAgainBtn.textContent = "Play Again";
+
+  // Quit button
+  const quitBtn = document.createElement("button");
+  quitBtn.textContent = "Quit to Menu";
+
+  // // Style (optional, or move to CSS file)
+  // dialog.style.padding = "2rem";
+  // dialog.style.borderRadius = "12px";
+  // dialog.style.textAlign = "center";
+
+  // Add to DOM
+  dialog.appendChild(message);
+  // dialog.appendChild(playAgainBtn);
+  // dialog.appendChild(quitBtn);
+  document.body.appendChild(dialog);
+
+  // Show modal
+  dialog.showModal();
+
+  // Play again handler
+  // playAgainBtn.addEventListener("click", () => {
+  //   dialog.close();
+  //   dialog.remove();
+  //   if (typeof onPlayAgain === "function") {
+  //     resetBoard();
+  //     onPlayAgain();
+  //   }
+  // });
+
+  // Quit handler
+  // quitBtn.addEventListener("click", () => {
+  //   dialog.close();
+  //   dialog.remove();
+  //   // Go back to menu
+  //   showPhase(gameState, "menu");
+  // });
 }
 
 export function buildSetUpBoard() {
