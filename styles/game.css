@@ -6,6 +6,11 @@
   padding: 4px;
   border-radius: 4px;
   position: relative;
+   background-color: rgba(26, 73, 106, 0.9);
+  min-height: 40rem;
+  min-width: 30rem;
+  border-radius: 0.75rem;
+  padding: 2rem;
 }
 
 .gameBoard__cell {
