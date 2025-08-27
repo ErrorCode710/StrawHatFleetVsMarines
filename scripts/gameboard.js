@@ -85,21 +85,31 @@ export class GameBoard {
     console.log(`"The receive attack ${y}, ${x}`);
     const cell = this.board[y]?.[x];
     console.log(cell);
+    console.log(this.board);
     // if (cell.state === "hit") {
     //   console.log("already hit");
     //   return;
     // }
     if (cell === "miss") {
-      console.log("ai hit the miss");
+      // console.log("ai hit the miss");
       return;
     }
     if (cell !== 0 && "miss") {
       console.log(cell.ship.hit(cell.index));
       cell.ship.hit(cell.index);
-      this.removeShipIfSunk(cell.ship);
+
       this.board[y][x].state = "hit";
+      if (this.removeShipIfSunk(cell.ship)) {
+        this.markShipAsSunk(cell.ship);
+        console.log("This ship is sunk", cell);
+        // object is just to put a property sunk or put on the state sunk on the { ship: ship, index: i, state: "idle" } for ui different color for sunk and hit
+        // the problem is i need to put all the state "sunk" but its
+        //
+        //
+      }
       const total = this.totalRemainingShips();
       console.log(`Total Ship on the board ${total}`);
+
       return { hit: true, coord: [y, x], sunk: this.removeShipIfSunk(cell.ship), shipSize: cell.ship.size };
     } else {
       this.board[y][x] = "miss";
@@ -117,8 +127,6 @@ export class GameBoard {
     if (ship.isSunk()) {
       // console.log(ship.type);
       const index = this.placedShip.findIndex((shipIndex) => shipIndex.type === ship.type);
-
-      // console.log(index);
       if (index !== -1) {
         this.placedShip.splice(index, 1);
       }
@@ -135,6 +143,16 @@ export class GameBoard {
     arr.forEach((row) => {
       console.log(row.join(" "));
     });
+  }
+  markShipAsSunk(ship) {
+    for (let row of this.board) {
+      for (let cell of row) {
+        if (cell !== 0 && cell.ship === ship) {
+          console.log(`this is the cell`, cell);
+          cell.state = "sunk";
+        }
+      }
+    }
   }
 }
 

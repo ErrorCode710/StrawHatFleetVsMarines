@@ -1,5 +1,5 @@
 import { Player } from "./scripts/player.js";
-import { handlePlayerNameEntry, showPhase, buildSetUpBoard, setUpBoard, shipPlace } from "./scripts/dom.js";
+import { handlePlayerNameEntry, showPhase, showWinner, setUpBoard, shipPlace, renderPlayersName } from "./scripts/dom.js";
 import { GameManager } from "./scripts/gameManager.js";
 import { GameBoard } from "./scripts/gameboard.js";
 
@@ -25,7 +25,6 @@ document.querySelectorAll(".home__button").forEach((btn) => {
   });
 });
 
-// Player One Name Entry and Board Setup
 document.querySelector(".player-name__form").addEventListener("submit", (e) => {
   e.preventDefault();
   // grab values
@@ -37,14 +36,11 @@ document.querySelector(".player-name__form").addEventListener("submit", (e) => {
 document.querySelector("#btn-confirm").addEventListener("click", () => {
   showPhase(gameState, "gameplay");
 
-  
   game = new GameManager();
   game.startGame(shipPlace);
-
-  initBoardListeners()
+  renderPlayersName(gameState.fleetName);
+  initBoardListeners();
 });
-
-
 
 function initBoardListeners() {
   player1Board.addEventListener("click", (e) => {
@@ -60,8 +56,12 @@ function initBoardListeners() {
       (isPlayer1Turn && e.currentTarget === player1Board) || (!isPlayer1Turn && e.currentTarget === player2Board);
 
     if (!isCorrectBoard) return;
+    
+    const outcome = game.gameLoop(y, x);
 
-    game.gameLoop(y, x);
+    if (outcome?.status === "victory") {
+      showWinner(outcome.winner); 
+    }
   });
 }
 

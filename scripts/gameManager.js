@@ -29,7 +29,6 @@ export class GameManager {
     }
   }
   gameLoop(y, x) {
-  
     // console.log(y, x);
     // 1. Player 1 human attack on Ai's board
     // Second call
@@ -39,8 +38,12 @@ export class GameManager {
     this.render();
 
     if (this.checkVictory()) {
-      console.log(this.currentPlayer === this.player1 ? "player 1 wins" : "player 2 wins");
-      return;
+      return {
+        status: "victory",
+        winner: this.currentPlayer === this.player1 ? "player1" : "player2",
+      };
+      // console.log(this.currentPlayer === this.player1 ? "player 1 wins" : "player 2 wins");
+      // return;
     }
 
     const justPlayed = this.currentPlayer;
@@ -50,17 +53,13 @@ export class GameManager {
     console.log("Who is currentPlayer:", this.currentPlayer.playerName);
 
     if (justPlayed.isPlayerAi) {
-
       justPlayed.getResult(result); // now AI gets correct feedback
     }
 
     if (this.currentPlayer.isPlayerAi) {
-      // this.currentPlayer.getResult(result);
-      console.log(this.currentPlayer.playerName);
       const [aiY, aiX] = this.currentPlayer.AiPlayer();
 
-      this.gameLoop(aiY, aiX);
-      return;
+      return this.gameLoop(aiY, aiX);
     }
 
     return result;

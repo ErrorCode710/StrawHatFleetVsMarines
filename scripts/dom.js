@@ -13,19 +13,24 @@ export function renderBoard(gameBoard, playerBoard) {
 
   for (let y = 0; y < gameBoard.board.length; y++) {
     for (let x = 0; x < gameBoard.board[y].length; x++) {
+      // console.log(gameBoard.board);
       const value = gameBoard.board[y][x];
+
       let classValue = "empty";
 
       if (value === 0) {
         classValue = "empty";
       } else if (value.state === "idle") {
-        if (!boardContainer.classList.contains("gameboard--player2")) {
-          classValue = "ship";
-        }
+        // if (!boardContainer.classList.contains("gameboard--player2")) {
+        //   classValue = "ship";
+        // }
+        classValue = "ship";
       } else if (value.state === "hit") {
         classValue = "hit";
       } else if (value === "miss") {
         classValue = "miss";
+      } else if (value.state === "sunk") {
+        classValue = "sunk";
       }
 
       const tile = cell(y, x, classValue);
@@ -102,12 +107,12 @@ function startGame() {
 
   renderPlayersName();
 }
-function renderPlayersName() {
+export function renderPlayersName(name) {
   const player1 = document.querySelector(".game-screen__player--1");
-  const player2 = document.querySelector(".game-screen__player--2");
+  // const player2 = document.querySelector(".game-screen__player--2");
 
-  player1.textContent = playerNames.player1;
-  player2.textContent = playerNames.player2;
+  player1.textContent = name;
+  // player2.textContent = playerNames.player2;
 }
 
 function cell(y, x, value) {
@@ -123,6 +128,12 @@ export function showPhase(state, phase) {
     el.style.display = el.dataset.phase === phase ? "flex" : "none";
   });
   state.phase = phase;
+}
+export function showWinner(winner) {
+  const overlay = document.createElement("div");
+  overlay.className = "winner-overlay";
+  overlay.textContent = winner === "player1" ? "Player 1 Wins!" : "Player 2 Wins!";
+  document.body.appendChild(overlay);
 }
 
 export function buildSetUpBoard() {

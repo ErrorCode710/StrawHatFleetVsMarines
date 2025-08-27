@@ -9,13 +9,12 @@
 }
 
 .gameboard--gameplay {
-  background-color: rgba(26, 73, 106, 0.9);
-  min-height: 40rem;
+  /* background-color: rgba(26, 73, 106, 0.9); */
+  min-height: 35rem;
   min-width: 30rem;
   border-radius: 0.75rem;
-  padding: 2rem;
+  padding: 0 2rem;
 }
-
 
 .gameBoard__cell {
   /* background-color: #eee; */
@@ -28,7 +27,9 @@
 .gameBoard__cell.danger {
   background-color: var(--color-ku-crimson);
 }
-
+.gameBoard__cell.sunk {
+  background-color: darkred;
+}
 /* Optional: Distinct border color on hover */
 .gameBoard__cell:hover {
   background-color: #2563eb; /* Tailwind blue-600 */
@@ -39,8 +40,6 @@
 .gameBoard__cell.ship {
   background-color: rgb(195, 249, 1);
 }
-
-
 
 .gameBoard__cell.hit {
   background-color: red;
@@ -53,7 +52,7 @@
 /* SETUP BOARD STYLE */
 .board-setup-screen {
   background-color: rgba(26, 73, 106, 0.9);
-  min-height: 40rem;
+  min-height: 35rem;
   min-width: 30rem;
   border-radius: 0.75rem;
   padding: 2rem;
@@ -185,4 +184,18 @@
 
 .occupied {
   background-color: var(--color-absolute-zero);
+}
+
+.game-screen {
+}
+
+.game-screen__player {
+  background-color: rgba(26, 73, 106, 0.9);
+  border-radius: 0.75rem;
+  margin: 1rem;
+}
+.game-screen__title {
+  color: white;
+  text-align: center;
+  padding: 1rem;
 }
